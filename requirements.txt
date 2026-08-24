@@ -1,0 +1,4 @@
+requests
+faiss-cpu
+numpy
+scipy
