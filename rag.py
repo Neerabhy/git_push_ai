@@ -2,8 +2,7 @@
 from embeddings import EmbeddingModel
 from vector_store_brute_force import VectorStore
 
-embedder = EmbeddingModel()
-store = VectorStore()
+
 
 while True:
     query = input("\nAsk a question (or 'exit'): ")

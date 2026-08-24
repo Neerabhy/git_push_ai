@@ -18,3 +18,7 @@ build/
 *.pem
 id_rsa
 credentials.json
+
+# Artifacts (do not commit)
+tfidf.pkl
+vector_db.pkl

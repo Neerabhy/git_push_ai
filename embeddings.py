@@ -30,7 +30,7 @@ class EmbeddingModel:
 
         if not hasattr(self.vectorizer, "vocabulary_"):
             raise ValueError(
-                "Vectorizer not fitted. Run ingest.py first."
+                "Vectorizer not "
             )
 
         embedding = self.vectorizer.transform([query])
