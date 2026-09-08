@@ -1,4 +1,3 @@
-import json
 import re
 from dataclasses import dataclass
 
@@ -52,7 +51,7 @@ def recursive_split(text, chunk_size, separators):
 
             return final_chunks
 
-    # fallback hard split
+
     return [
         text[i:i + chunk_size]
         for i in range(0, len(text), chunk_size)
@@ -113,7 +112,7 @@ def perform_semantic_chunking(document, chunk_size=500, chunk_overlap=100):
         stopwords = {
             'the', 'and', 'is', 'of', 'to',
             'a', 'in', 'that', 'it', 'with',
-            'as', 'for'
+            'as'
         }
 
         content_words = [
