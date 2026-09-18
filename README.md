@@ -1,17 +1,37 @@
-# Project Documentation
+# Project: RAG + Vector Search
+
+This repository contains a lightweight retrieval-augmented generation (RAG) and vector search demo implemented in Python.
 
 ## Overview
-This project was automatically analyzed by the AI DevOps Engineer.
+- Ingest documents, create embeddings, and query a vector store to retrieve context for LLM prompts.
+- Implements simple vector stores and utilities for experimentation.
 
-## Tech Stack
-- **Languages:** Python
-- **Frameworks:** None detected
-- **Tests Configured:** No
-- **Dockerized:** No
-- **CI/CD:** No
+## Key Files
+- ingest.py — document ingestion pipeline
+- embeddings.py — embedding helpers (adapter for embedding models)
+- vector_store_faiss.py — FAISS-backed vector store implementation
+- vector_store_brute_force.py — simple in-memory brute-force vector store
+- semantic_chunker.py — text chunking utilities
+- query.py — example query flow
+- rag.py — orchestration for retrieval-augmented generation
 
 ## Getting Started
-Please refer to the specific framework documentation for running this project locally.
+1. Create a virtual environment and install dependencies:
 
-## Note on Large Files & Secrets
-Large binary files and secrets (.env, credentials) are explicitly ignored in this repository to maintain security and keep the repository size small.
+   pip install -r requirements.txt
+
+2. Run the ingestion pipeline to build or update the vector store:
+
+   python ingest.py
+
+3. Query the collection:
+
+   python query.py
+
+## Notes
+- This repo is a demo and not production hardened. Avoid using sensitive API keys in plaintext.
+- Large binary artifacts and secrets are intentionally ignored.
+
+## Development
+- Tests and CI are not configured. Contributions are welcome — follow the existing code style.
+
