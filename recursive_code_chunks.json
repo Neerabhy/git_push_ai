@@ -1,0 +1,90 @@
+[
+  {
+    "content": "import json\nimport re\nfrom dataclasses import dataclass\n\n\n@dataclass",
+    "metadata": {
+      "chunk_id": 0,
+      "language": "python",
+      "chunk_type": "import",
+      "structure_name": "json",
+      "lines": 6
+    },
+    "preview": "import json\nimport re\nfrom dataclasses import dataclass\n\n\n@dataclass"
+  },
+  {
+    "content": "Document:\n    page_content: str\n    metadata: dict\n\n\ndef load_code_file(file_path):\n    with open(file_path, \"r\", encoding=\"utf-8\") as f:\n        return f.read()\n\n\n# Language-aware separators\ndef get_language_separators(language):\n\n    language = language.lower()\n\n    if language == \"python\":\n        return [\"\\nclass \", \"\\ndef \", \"\\n\\n\", \"\\n\", \" \", \"\"]\n    elif language == \"javascript\":\n        return [\"\\nclass \", \"\\nfunction \", \"\\n\\n\", \"\\n\", \" \", \"\"]\n    elif language == \"java\":\n        return [\"\\nclass \", \"\\npublic \", \"\\n\\n\", \"\\n\", \" \", \"\"]\n    elif language == \"go\":\n        return [\"\\nfunc \", \"\\n\\n\", \"\\n\", \" \", \"\"]\n    elif language == \"rust\":\n        return [\"\\nfn \", \"\\nimpl \", \"\\n\\n\", \"\\n\", \" \", \"\"]\n    else:\n        return [\"\\n\\n\", \"\\n\", \" \", \"\"]",
+    "metadata": {
+      "chunk_id": 1,
+      "language": "python",
+      "chunk_type": "function",
+      "structure_name": "load_code_file",
+      "lines": 27
+    },
+    "preview": "Document:\n    page_content: str\n    metadata: dict\n\n\ndef load_code_file(file_path):\n    with open(file_path, \"r\", encodi"
+  },
+  {
+    "content": "recursive_split(text, chunk_size, separators):\n\n    if len(text) <= chunk_size:\n        return [text.strip()]\n\n    if not separators:\n        return [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]\n\n    sep = separators[0]\n\n    # fallback to hard split\n    if sep == \"\":\n        return [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]\n\n    parts = text.split(sep)\n\n    chunks = []\n    current = parts[0]\n\n    for part in parts[1:]:\n\n        candidate = current + sep + part\n\n        if len(candidate) <= chunk_size:\n            current = candidate\n        else:\n            chunks.append(current.strip())\n            current = part\n\n    if current:\n        chunks.append(current.strip())\n\n    # recursively refine oversized chunks\n    result = []\n    for chunk in chunks:\n        if len(chunk) > chunk_size:\n            result.extend(\n                recursive_split(chunk, chunk_size, separators[1:])\n            )\n        else:\n            result.append(chunk)",
+    "metadata": {
+      "chunk_id": 2,
+      "language": "python",
+      "chunk_type": "code_segment",
+      "structure_name": "segment_2",
+      "lines": 41
+    },
+    "preview": "recursive_split(text, chunk_size, separators):\n\n    if len(text) <= chunk_size:\n        return [text.strip()]\n\n    if no"
+  },
+  {
+    "content": "return result",
+    "metadata": {
+      "chunk_id": 3,
+      "language": "python",
+      "chunk_type": "code_segment",
+      "structure_name": "segment_3",
+      "lines": 1
+    },
+    "preview": "return result"
+  },
+  {
+    "content": "add_overlap(chunks, overlap):\n\n    if overlap <= 0:\n        return chunks\n\n    overlapped = []\n\n    for i, chunk in enumerate(chunks):\n\n        if i == 0:\n            overlapped.append(chunk)\n        else:\n            overlap_text = chunks[i-1][-overlap:]\n            overlapped.append(overlap_text + chunk)\n\n    return overlapped",
+    "metadata": {
+      "chunk_id": 4,
+      "language": "python",
+      "chunk_type": "code_segment",
+      "structure_name": "segment_4",
+      "lines": 16
+    },
+    "preview": "add_overlap(chunks, overlap):\n\n    if overlap <= 0:\n        return chunks\n\n    overlapped = []\n\n    for i, chunk in enum"
+  },
+  {
+    "content": "perform_code_chunking(\n    code_document,\n    language=\"python\",\n    chunk_size=1000,\n    chunk_overlap=0\n):\n\n    separators = get_language_separators(language)\n\n    chunks = recursive_split(code_document, chunk_size, separators)\n    chunks = add_overlap(chunks, chunk_overlap)\n\n    print(f\"Code document split into {len(chunks)} chunks\")\n\n    documents = []\n\n    for i, chunk in enumerate(chunks):\n\n        function_match = re.search(\n            r'def\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(',\n            chunk\n        )\n        class_match = re.search(\n            r'class\\s+([a-zA-Z_][a-zA-Z0-9_]*)',\n            chunk\n        )\n        import_match = re.search(\n            r'import\\s+([a-zA-Z_][a-zA-Z0-9_\\.]*)',\n            chunk\n        )\n\n        chunk_type = \"code_segment\"",
+    "metadata": {
+      "chunk_id": 5,
+      "language": "python",
+      "chunk_type": "code_segment",
+      "structure_name": "segment_5",
+      "lines": 32
+    },
+    "preview": "perform_code_chunking(\n    code_document,\n    language=\"python\",\n    chunk_size=1000,\n    chunk_overlap=0\n):\n\n    separa"
+  },
+  {
+    "content": "if function_match:\n            chunk_type = \"function\"\n            structure_name = function_match.group(1)\n        elif class_match:\n            chunk_type = \"class\"\n            structure_name = class_match.group(1)\n        elif import_match:\n            chunk_type = \"import\"\n            structure_name = import_match.group(1)\n        else:\n            structure_name = f\"segment_{i}\"\n\n        metadata = {\n            \"chunk_id\": i,\n            \"language\": language,\n            \"chunk_type\": chunk_type,\n            \"structure_name\": structure_name,\n            \"lines\": chunk.count(\"\\n\") + 1\n        }\n\n        documents.append(Document(chunk, metadata))\n\n    return documents",
+    "metadata": {
+      "chunk_id": 6,
+      "language": "python",
+      "chunk_type": "code_segment",
+      "structure_name": "segment_6",
+      "lines": 23
+    },
+    "preview": "if function_match:\n            chunk_type = \"function\"\n            structure_name = function_match.group(1)\n        elif"
+  },
+  {
+    "content": "save_to_json(documents, filename=\"recursive_code_chunks.json\"):\n\n    data = []\n\n    for doc in documents:\n        data.append({\n            \"content\": doc.page_content,\n            \"metadata\": doc.metadata,\n            \"preview\": doc.page_content[:120]\n        })\n\n    with open(filename, \"w\", encoding=\"utf-8\") as f:\n        json.dump(data, f, indent=2, ensure_ascii=False)\n\n    print(f\"Code chunks saved to {filename}\")\n\n\nif __name__ == \"__main__\":\n\n    code_document = load_code_file(\"recursive_chunking.py\")\n\n    chunked_docs = perform_code_chunking(\n        code_document,\n        language=\"python\",\n        chunk_size=1000,\n        chunk_overlap=0\n    )\n\n    save_to_json(chunked_docs)",
+    "metadata": {
+      "chunk_id": 7,
+      "language": "python",
+      "chunk_type": "code_segment",
+      "structure_name": "segment_7",
+      "lines": 29
+    },
+    "preview": "save_to_json(documents, filename=\"recursive_code_chunks.json\"):\n\n    data = []\n\n    for doc in documents:\n        data.a"
+  }
+]

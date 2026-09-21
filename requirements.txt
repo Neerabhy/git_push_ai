@@ -1,5 +1,5 @@
-requests>=2.0.0
-faiss-cpu
+requests==2.31.0
 numpy
 scipy
 pytest
+# faiss-cpu moved out of default CI requirements due to heavy build issues; add locally if needed
