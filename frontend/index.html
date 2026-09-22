@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyage AI | Workspace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈️</text></svg>">
+    <link rel="stylesheet" href="/static/style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="material-symbols-rounded icon-accent">flight_takeoff</span>
+                <h2>Voyage AI</h2>
+            </div>
+            
+            <button class="new-chat-btn">
+                <span class="material-symbols-rounded">add</span>
+                New Trip Plan
+            </button>
+
+            <div class="history-list">
+                <p class="history-label">Recent Trips</p>
+                <div class="history-item active"><span class="material-symbols-rounded">chat_bubble</span> Current Session</div>
+                <div class="history-item"><span class="material-symbols-rounded">chat_bubble</span> Seattle Coffee Tour</div>
+                <div class="history-item"><span class="material-symbols-rounded">chat_bubble</span> Tokyo in 3 Days</div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar user-avatar-small">U</div>
+                    <span>Guest User</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="chat-main">
+            <header class="chat-header">
+                <h3>Travel Orchestrator v1.0</h3>
+                <div class="status-badge" id="conn-status">
+                    <span class="dot green"></span> Connected
+                </div>
+            </header>
+            
+            <div id="chat-window">
+                <div class="message-row bot">
+                    <div class="avatar bot-avatar"><span class="material-symbols-rounded">smart_toy</span></div>
+                    <div class="message-content">
+                        <p>Hello. I am the Voyage AI planning system. Describe your ideal trip, and my agent swarm will orchestrate the details.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div class="input-box">
+                    <textarea id="user-input" rows="1" placeholder="Ask Voyage AI to plan a trip..."></textarea>
+                    <button id="send-btn" disabled>
+                        <span class="material-symbols-rounded">send</span>
+                    </button>
+                </div>
+                <div class="footer-text">AI agents can make mistakes. Always verify flight and hotel details.</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
